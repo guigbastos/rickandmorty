@@ -3,32 +3,18 @@ from src.models.character_model import Character
 
 class CharacterRepository:
 
-    def get_all_characters(self, filters=None, limit=10, offset=0):
-        # try:
-        #     characters = Character.query.all()
-        #     return characters
-        # except:
-        #     db.session.rollback()
-        #     raise
-        if filters is None:
-            filters = {}
-        
+    def get_all_characters(self, name=None, page=1, limit=20, offset=0):
         try:
-            query = db.session.query(Character)
-            if 'name' in filters:
-                query = query.filter(Character.name.like(f'%{filters["name"]}%'))
-            if 'status' in filters:
-                query = query.filter(Character.status == filters['status'])
-            if 'species' in filters:
-                query = query.filter(Character.species == filters['species'])
-            if 'gender' in filters:
-                query = query.filter(Character.gender == filters['gender'])
+            if page and page > 1:
+                offset = (page - 1) * limit
             
-            total = query.count()
+            query = Character.query
 
-            characters = query.offset(offset).limit(limit).all()
-
-            return characters, total
+            if name:
+                query = query.filter(Character.name.ilike(f'%{name}%'))
+            
+            character = query.limit(limit).offset(offset).all()
+            return character
         except:
             db.session.rollback()
             raise

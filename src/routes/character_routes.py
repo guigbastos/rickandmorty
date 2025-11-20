@@ -6,10 +6,9 @@ character_controller = CharacterController()
 
 @character_bp.route('/', methods=['GET'])
 def get_all_characters():
-    # name = request.args.get('name', None)
-    # return character_controller.get_all_characters(name)
-    params = request.args.to_dict()
-    return character_controller.get_all_characters(params)
+    name = request.args.get('name', None)
+    page = request.args.get('page', type=int)
+    return character_controller.get_all_characters(name, page)
 
 
 @character_bp.route('/<int:id>', methods=['GET'])
