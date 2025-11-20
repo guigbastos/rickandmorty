@@ -7,9 +7,17 @@ class CharacterController:
     def __init__(self):
         self.character_service = CharacterService()
 
-    def get_all_characters(self, name):
-        try:
-            data = self.character_service.get_all_characters()
+    def get_all_characters(self, params):
+        # try:
+        #     data = self.character_service.get_all_characters()
+        #     return jsonify(data), 200
+        # except Exception as e:
+        #     print(e)
+        #     return jsonify({
+        #         "Erro": "Aconteceu algum erro"
+        #     }), 500
+        try: 
+            data = self.character_service.get_all_characters(params)
             return jsonify(data), 200
         except Exception as e:
             print(e)
