@@ -3,11 +3,8 @@ from src.models.character_model import Character
 
 class CharacterRepository:
 
-    def get_all_characters(self, name=None, page=1, limit=20, offset=0):
+    def get_all_characters(self, name, limit, offset=0):
         try:
-            if page and page > 1:
-                offset = (page - 1) * limit
-            
             query = Character.query
 
             if name:

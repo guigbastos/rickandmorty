@@ -7,7 +7,7 @@ character_controller = CharacterController()
 @character_bp.route('/', methods=['GET'])
 def get_all_characters():
     name = request.args.get('name', None)
-    page = request.args.get('page', type=int)
+    page = request.args.get('page', default=1, type=int)
     return character_controller.get_all_characters(name, page)
 
 

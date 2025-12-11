@@ -8,8 +8,10 @@ class CharacterService:
     def __init__(self):
         self.character_repository = CharacterRepository()
 
-    def get_all_characters(self, name=None, page=1, limit=20, offset=0):
-        characters = self.character_repository.get_all_characters(name, page, limit, offset)
+    def get_all_characters(self, name, page):
+        limit = 20
+        offset = (page - 1) * limit
+        characters = self.character_repository.get_all_characters(name, limit, offset)
 
         data = characters_output.dump(characters)
 
@@ -20,6 +22,9 @@ class CharacterService:
     
     def get_character_by_id(self, id):
         character = self.character_repository.get_character_by_id(id)
+
+        if not character:
+            raise NotFound("Personagem não encontrado")
 
         data = character_output.dump(character)
 
