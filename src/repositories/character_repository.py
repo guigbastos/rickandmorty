@@ -16,6 +16,16 @@ class CharacterRepository:
             db.session.rollback()
             raise
 
+    def count_characters(self, name):
+        try:
+            query = Character.query
+            if name:
+                query = query.filter(Character.name.ilike(f'%{name}%'))
+            return query.count()
+        except:
+            db.session.rollback()
+            raise
+
     def get_character_by_id(self, id):
         try:
             character = Character.query.get(id)

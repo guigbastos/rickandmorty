@@ -12,11 +12,22 @@ class CharacterService:
         limit = 20
         offset = (page - 1) * limit
         characters = self.character_repository.get_all_characters(name, limit, offset)
+        total_items = self.character_repository.count_characters(name)
+
+        if total_items > 0:
+            total_pages = (total_items + limit - 1) // limit
+        else:
+            total_pages = 1
 
         data = characters_output.dump(characters)
 
         return {
-            "data": data
+            "data": data,
+            "meta": {
+                "current_page": int(page),
+                "total_pages": int(total_pages),
+                "total_items": int(total_items)
+            }
         }
         
     
