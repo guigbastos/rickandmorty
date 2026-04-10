@@ -20,6 +20,8 @@ origins_map = {
 
 allowed_origin = origins_map.get(environment, origins_map[Environments.PRODUCTION.value])
 
+print(allowed_origin)
+
 CORS(app, origins=allowed_origin)
 # resources={r"/*": {"origins": "http://localhost:5173"}}
 

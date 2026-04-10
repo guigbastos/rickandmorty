@@ -1,5 +1,6 @@
 from flask import jsonify
 from src.services.character_service import CharacterService
+import traceback
 # from src.utils.api_response import ApiResponse
 
 
@@ -14,9 +15,9 @@ class CharacterController:
             data = self.character_service.get_all_characters(name, page)
             return jsonify(data), 200
         except Exception as e:
-            print(e)
+            traceback.print_exc()
             return jsonify({
-                "Erro": "Aconteceu algum erro"
+                "Erro": str(e)
             }), 500
 
     def get_character_by_id(self, id):
@@ -24,7 +25,7 @@ class CharacterController:
             data = self.character_service.get_character_by_id(id)
             return jsonify(data), 200
         except Exception as e:
-            print(e)
+            traceback.print_exc()
             return jsonify({
-                "Erro": "Aconteceu algum erro"
+                "Erro": str(e)
             }), 500
